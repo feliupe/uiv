@@ -2621,7 +2621,7 @@ var popupMixin = {
     hide: function hide() {
       var _this4 = this;
 
-      if (this.hideTimeoutId > 0) {
+      if (this.showTimeoutId > 0) {
         clearTimeout(this.showTimeoutId);
         this.showTimeoutId = 0;
       }

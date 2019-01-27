@@ -255,4 +255,4 @@ export default {
       }, 20) // 20ms make firefox happy
     }
   }
-}1000
+}
