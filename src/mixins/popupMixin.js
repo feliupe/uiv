@@ -187,17 +187,23 @@ export default {
     show () {
       if (this.enable && this.triggerEl && this.isNotEmpty() && !this.isShown()) {
         let popup = this.$refs.popup
-        if (this.hideTimeoutId > 0) {
+
+        const popUpAppendedContainer = this.hideTimeoutId > 0 // weird condition
+        if (popUpAppendedContainer) {
           clearTimeout(this.hideTimeoutId)
           this.hideTimeoutId = 0
-        } else {
-          popup.className = `${this.name} ${this.placement} fade`
-          let container = document.querySelector(this.appendTo)
-          container.appendChild(popup)
-          this.resetPosition()
         }
 
         this.showTimeoutId = setTimeout(() => {
+
+          // add to dom
+          if (!popUpAppendedContainer) {
+            popup.className = `${this.name} ${this.placement} fade`
+            let container = document.querySelector(this.appendTo)
+            container.appendChild(popup)
+            this.resetPosition()
+          }
+
           addClass(popup, SHOW_CLASS)
           this.$emit('input', true)
           this.$emit('show')
