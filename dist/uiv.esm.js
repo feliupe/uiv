@@ -2601,17 +2601,23 @@ var popupMixin = {
 
       if (this.enable && this.triggerEl && this.isNotEmpty() && !this.isShown()) {
         var popup = this.$refs.popup;
-        if (this.hideTimeoutId > 0) {
+
+        var popUpAppendedContainer = this.hideTimeoutId > 0; // weird condition
+        if (popUpAppendedContainer) {
           clearTimeout(this.hideTimeoutId);
           this.hideTimeoutId = 0;
-        } else {
-          popup.className = this.name + ' ' + this.placement + ' fade';
-          var container = document.querySelector(this.appendTo);
-          container.appendChild(popup);
-          this.resetPosition();
         }
 
         this.showTimeoutId = setTimeout(function () {
+
+          // add to dom
+          if (!popUpAppendedContainer) {
+            popup.className = _this3.name + ' ' + _this3.placement + ' fade';
+            var container = document.querySelector(_this3.appendTo);
+            container.appendChild(popup);
+            _this3.resetPosition();
+          }
+
           addClass(popup, SHOW_CLASS);
           _this3.$emit('input', true);
           _this3.$emit('show');
